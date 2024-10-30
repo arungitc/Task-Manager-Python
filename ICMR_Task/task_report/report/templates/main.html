@@ -1,0 +1,222 @@
+
+
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+{% comment %} <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"> {% endcomment %}
+
+
+
+<link rel="stylesheet" href="{% static '/css/main.css' %}">
+
+  
+
+<script src="{% static '/javascript/mainScript.js' %}"></script>
+
+{% comment %} modal {% endcomment %}
+
+
+
+
+<div class="container"> 
+   
+        <h3 class="text-center mt-2 pt-3">List of Records</h3>
+        <center>
+
+        
+        <a class="p-1 text-decoration-none mt-1 create-btn"  style="border: 1px solid red;" href="{% url 'report_create' %}">
+            <i class="fa-solid fa-plus"></i> Create new entry
+        </a>
+    </center>
+    
+
+    <button onclick="window.location.href='{% url 'download_csv' %}'" class=" mb-3 download-btn">
+        Download as Excel
+        <i class="fa-solid fa-download"></i>
+        
+    </button> 
+    {% comment %} <button onclick="window.location.href='{% url 'download_csv' %}'">Download CSV</button> {% endcomment %}
+   
+    <table id="recordTable" class="display">
+       
+        <thead>
+            <tr class="header">
+                <th style="width: 5rem;">S. No.</th>
+                <th>User</th>
+                <th class="text-center">Doc. No.</th>
+                <th class="text-center">Name of Institutes:</th>
+                <th class="text-center">Head under project/Website:</th>
+                <th class="text-center">Subject:</th>
+                <th>Email ID:</th>
+                <th style="width: 6.5rem;">Date:</th>
+                <th style="width: 5rem; text-align: center;">PDF:</th>
+                {% comment %} <th>Other PDF:</th> {% endcomment %}
+
+                <th>Action</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr class="">
+            <td >
+                
+            </td>
+            <td class="text-capitalize"> 
+                {{ report.user.username}}
+            </td>
+            <td> 
+                {{ report.docId }}
+            
+            <td class="text-uppercase">
+                {{ report.Name_of_Institutes}}
+            </td>
+            <td>
+                {{ report.head_under_project_website}}
+            </td>
+            <td>
+                {{ report.subject}}
+            </td>
+
+            
+            <td>
+                {{ report.email}}
+            </td>
+            <td >
+                {{ report.date}}
+            </td>
+            
+            <td>  
+                
+                
+                {% if report.pdf_link %}
+                <a href="{{report.pdf_link}}" target="_blank" class="text-decoration-none text-danger">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    
+                
+                </a>
+                
+                
+                {% endif %}
+                {% if report.other_pdf %}
+                <span>|</span>
+                <a href="{{report.other_pdf}}" target="_blank" class="text-decoration-none text-danger">
+                <i class="fa-solid fa-file-pdf"></i>
+                
+                </a>
+                
+                {% endif %}
+            </p>
+
+            </td>
+        
+            <td class="text-center">
+                {% if report.user == user %}
+                
+                
+            <a href="{% url 'report_edit' report.id %}" class="text-decoration-none text-black" >
+                <i class="fa-solid fa-pen-to-square"></i>
+                    
+            </a>
+            <br>
+            {% comment %} <a href="{% url 'report_delete' report.id %}" class="text-decoration-none text-black">
+            
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                </svg>
+            </a> {% endcomment %}
+            <a href="" class="text-decoration-none text-black" data-toggle="modal" data-target="#deleteModal{{ report.id }}">
+            
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                </svg>
+            </a>
+
+              <!-- Delete Confirmation Modal -->
+              <div class="modal fade modalDelete" id="deleteModal{{ report.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-between">
+                            <h5 class="modal-title" id="deleteModalLabel{{ report.id }}">Delete</h5>
+                            <a type="button" class="close text-black fs-4" data-dismiss="modal" aria-label="Close">
+                                <i class="fa-regular fa-circle-xmark"></i>
+                                {% comment %} <span aria-hidden="true">&times;</span> {% endcomment %}
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this item?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form action="{% url 'report_delete' report.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Confirm</button>  
+                            </form>   
+            
+                {% endif %}
+            
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+    </table>
+
+    {% comment %} modal {% endcomment %}
+
+   
+
+
+
+
+
+
+    
+</div>
+
+
+
+<script>
+
+// searial number from 1 and so on.....
+
+function addSerialNumbers() {
+    var table = document.getElementById("recordTable");
+    var rows = table.getElementsByTagName("tr");
+  
+    for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+      var firstCell = rows[i].getElementsByTagName("td")[0];
+      firstCell.innerHTML = i;
+    }
+  }
+  
+  // Call the function to add serial numbers
+  addSerialNumbers();
+
+
+// download the table in excel
+
+  document.getElementById('download').addEventListener('click', function () {
+    var table = document.getElementById('recordTable');
+    var html = table.outerHTML.replace(/ /g, '%20');
+    var url = 'data:application/vnd.ms-excel,' + html;
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'table.xls';
+    a.click();
+});
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{% endblock %}

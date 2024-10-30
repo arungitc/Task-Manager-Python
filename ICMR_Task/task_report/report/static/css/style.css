@@ -1,0 +1,10 @@
+.navbar{
+    background-color: rgba(76, 56, 56, 0.208);
+}
+.navbar div a img{
+    mix-blend-mode: multiply;
+}
+
+.logout-form button {
+    mix-blend-mode: darken;
+}

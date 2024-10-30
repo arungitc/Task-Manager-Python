@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+     <h1 class="text-center  mt-4">Welcome to ICMR Daily Task Manager</h1>
+    <h6 class="text-center  mt-4">Delete Entry</h6>
+    <center>
+        <form method="post">
+            {% csrf_token %}
+            
+                <button class="btn btn-danger">
+                    Delete
+                </button>
+                <a class="btn btn-success" href="{% url 'report_list' %}">Cancel</a>
+           
+         
+        </form>
+        
+    </center> 
+     
+    
+
+    
+
+{% endblock %}

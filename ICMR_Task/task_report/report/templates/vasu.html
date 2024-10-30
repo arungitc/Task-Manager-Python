@@ -1,0 +1,275 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"> {% endcomment %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+
+
+
+
+<script>
+
+    $(document).ready(function($) {
+        $('#recordTable').DataTable({
+            "pagingType": "full_numbers",
+            "pageLength": 10,
+            "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                   "<'row'<'col-sm-12'tr>>" +
+                   "<'row'<'col-sm-12'p>>",
+    
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search records"
+            },
+            "drawCallback": function () {
+                var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+                pagination.addClass('custom-pagination');
+                pagination.find('a').wrap('<li class="page-item"></li>');
+                pagination.find('span').wrap('<li class="page-item"></li>');
+    
+                pagination.find('li').click(function() {
+                    pagination.find('li').removeClass('active');
+                    $(this).addClass('active');
+                });
+            }
+        });
+    });
+
+
+
+
+
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); 
+        alert('Access Denied');
+      });
+      
+      document.onkeydown = function(e) {
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+          alert('Access Denied');
+          return false;
+        }
+      };
+     
+    
+</script>
+    
+<style>
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+        background-color: #e8e8e8;
+    }
+    
+    img {
+        width: 50px; 
+        height: auto;
+    }
+    .dataTables_wrapper .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        
+    }
+    
+    /* Right-align the search box */
+    .dataTables_wrapper .dataTables_filter {
+        text-align: right;
+    }
+    
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        flex: 1;
+    }
+    
+    /* DataTables on smaller screens */
+    @media screen and (max-width: 767px) {
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            text-align: left;
+        }
+        .dataTables_wrapper .dataTables_filter {
+            margin-top: 0.75rem;
+        }
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        text-align: center; 
+        float: right; 
+    }
+
+    .custom-pagination .page-item {
+        display: inline-block;
+        margin: 0 2px;
+        border: 1px solid #ddd; /* Border for the boxes */
+        padding: 5px 10px;
+        border-radius: 5px; /* Optional: for rounded corners */
+    }
+    
+    .custom-pagination .page-item.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    
+    .custom-pagination .page-item:hover {
+        background-color: #f0f0f0;
+    }
+    
+
+
+    /* Custom pagination styling */
+    .pagination-box {
+        display: inline-block;
+        margin: 0 5px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .pagination-box:hover {
+        background-color: #f0f0f0; /* Change to the desired hover color */
+    }
+    
+    .pagination-box.active {
+        font-weight: bold;
+        background-color: #007bff; 
+        color: #fff;
+    }
+
+    
+        
+    
+        .container {
+            border: 2px solid #ddd; 
+            margin-right:auto;  
+           margin-left:auto;
+           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+            background-color: #fff; 
+            max-width: 1200px; 
+        }
+    
+        
+    
+    
+    
+
+</style>
+
+<div class="container"> 
+    <h3>List of Records</h3>
+    <table id="recordTable" class="display">
+        <thead>
+            <tr>
+                <th>UID</th>
+                <th>Post Mortem No. & Date</th>
+                <th>Primary Image of Unidentified Body</th>
+                <th>State & District</th>
+                <th>Found Place & Date</th>
+                <th>Physical Characteristics</th>
+                <th>Genotype/DNA Data</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.uuid }}</td>
+                <td> <br>P.m no : {{ record.post_mortem_no }}</br>
+                    Pm Date : {{ record.date_of_postmortem }}</td>
+                <td>
+                    {% if record.primary_image %}
+                    <img src="{{ record.primary_image.url }}" alt="Primary Image" style="width: 100px; height: auto;">
+                    {% endif %}
+                </td>
+                <td><br> State: {{ record.state }}</br>
+                     District: {{ record.district }}</td>
+                <td><br> Found Palace : {{ record.found_palace }}</br>
+                        Found Date : {{ record.found_date }}</td>
+                <td>
+                    
+                    Age: 
+                    {% if record.age_year%}
+                        {{ record.age_year }} years
+                    {% elif record.age_months %}
+                        {{ record.age_months }} months
+                    {% elif record.age_days %}
+                        {{ record.age_days }} days
+                    {% endif %}
+                   <br>                
+                    Gender: {{ record.gender }}<br>
+                    Complexion: {{ record.complexation }}
+                </td>
+                <td>{{ record.dna_profile }}</td>
+                <td>
+                    <a href="{% url 'view_record' record_uuid=record.uuid %}" title="View record">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8Z"/>
+                            <path d="M3 8s1.5-2 5-2 5 2 5 2-1.5 2-5 2-5-2-5-2Z"/>
+                            <path d="M8 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+                        </svg>
+                    </a>
+                    <br>
+                
+                     <a href="{% url 'update_record'  record_uuid=record.uuid %}" title="Update/edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg>
+                     </a>
+                <br>
+                     
+                    <a href="{% url 'delete_record'  record_uuid=record.uuid %}" title="Delete record">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                      </svg>
+                    </a>
+                      
+                    <br>
+                     <a href="{% url 'add_dna'  record_uuid=record.uuid %}" title="Add/edit Dna"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bezier" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                            <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.52 6.52 0 0 0 1.814 9H2.5q.186 0 .358.043a5.52 5.52 0 0 1 3.185-3.185A1.5 1.5 0 0 1 6 5.5zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.52 6.52 0 0 1 2.72 3.5H13.5q-.185 0-.358.043a5.52 5.52 0 0 0-3.185-3.185"/>
+                          </svg>
+                    </a> 
+                    <br>
+
+
+                    <a href="{% url 'add_str'  record_uuid=record.uuid %}" title="Add/edit str"> 
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
+                          </svg>
+
+
+                    
+ 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+
+<style>
+    form div label{
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+    }
+    form input{
+        
+    }
+</style>
+
+    <h1 class="text-center  mt-4">Welcome to ICMR Daily Task Manager</h1>
+<h2>
+    {% if form.instance.pk%} 
+    Edit Report 
+    {% else %} 
+    Create Report
+    {% endif %} 
+   
+    <div class="container row">
+        <form method="post" enctype="multipart/form-data"
+            class="form fs-6 mt-3">
+                {% csrf_token %}
+                <div class="d-flex gap-5">
+                    <div>
+                        <label for="{{ form.name.id_for_label }}">User:</label>
+                        {{ form.user }}
+                        {{ form.user.errors }}
+                    </div>
+                    <div>
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                    <div>
+                        <label for="{{ form.Name_of_Institutes.id_for_label }}">Name of Institutes:</label>
+                        {{ form.Name_of_Institutes }}
+                        {{ form.Name_of_Institutes.errors }}
+                    </div>
+                    <div>
+                        <label for="{{ form.docId.id_for_label }}">Document No.:</label>
+                        {{ form.docId }}
+                        {{ form.docId.errors }}
+                    </div>
+                    <div>
+                        <label for="{{ form.date.id_for_label }}">Date:</label>
+                        {{ form.date }}
+                        {{ form.date.errors }}
+                    </div>
+                    <div>
+                        <label for="{{ form.head_under_project_website.id_for_label }}">Head.:</label>
+                        {{ form.head_under_project_website }}
+                        {{ form.head_under_project_website.errors }}
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label for="{{ form.subject.id_for_label }}">Subject:</label>
+                    {{ form.subject }}
+                    {{ form.subject.errors }}
+                </div>
+                
+                
+                
+                
+                <div class="mt-3">
+                    <label for="{{ form.pdf_link.id_for_label }}">Pdf Link 1:</label>
+                    {{ form.pdf_link }} <br>
+                    {{ form.pdf_link.errors }} 
+                    <label for="{{ form.other_pdf.id_for_label }}">Pdf Link 2:</label>
+                    {{ form.other_pdf }} <br>
+                    {{ form.other_pdf.errors }} 
+                </div>
+                
+                    
+                <div class="mt-3">
+                    <button class="btn btn-warning fs-6" type="submit">
+                        Submit
+                    </button>
+                    <a href="{% url 'report_list' %}" class="btn btn-outline-success fs-6" 
+                              class="border border-secondary text-decoration-none p-1">
+                        Back to Reports
+                    </a> 
+                </div>
+                
+   
+        </form>
+    </div>
+    
+</h2>
+
+
+{% endblock %}

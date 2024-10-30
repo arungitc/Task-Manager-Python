@@ -1,0 +1,188 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+tr{
+  border-bottom: 1px solid black;
+}
+tr:hover {
+  background-color: #e8e8e8;
+}
+
+img {
+  width: 50px;
+  height: auto;
+}
+.dataTables_wrapper .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Right-align the search box */
+.dataTables_wrapper .dataTables_filter {
+  text-align: right;
+}
+.dataTables_filter input{
+  
+  font-size: 14px;
+  border-radius: 6px;
+  line-height: 1.5;
+  padding: 5px 10px;
+  transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+  border: 2px solid #dee1e2;
+  color: rgb(14, 14, 16);
+  background: #dee1e2;
+  display: block;
+  height: 36px;
+  
+  
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  
+}
+.dataTables_filter input:hover {
+  border-color: #ccc;
+}
+
+.dataTables_filter input:focus{
+  border-color: #9147ff;
+  background: #fff;
+}
+.download-btn{
+  
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0 24px;
+  border-radius: 50px;
+  min-width: 200px;
+  height: 50px;
+  font-size: 18px;
+  background-color: #fd0;
+  font-weight: 500;
+  color: #222;
+  
+}
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  flex: 1;
+}
+
+/* DataTables on smaller screens */
+@media screen and (max-width: 767px) {
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter {
+    text-align: left;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    margin-top: 0.75rem;
+  }
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  text-align: center;
+  float: right;
+}
+
+.custom-pagination .page-item {
+  display: inline-block;
+  margin: 0 2px;
+  /* border: 1px solid #ddd; Border for the boxes */
+  padding: 5px 10px;
+  border-radius: 5px; /* Optional: for rounded corners */
+}
+.custom-pagination .page-item a{
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+.custom-pagination .page-item.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.custom-pagination .page-item:hover {
+  background-color: #f0f0f0;
+  
+}
+
+/* Custom pagination styling */
+.pagination-box {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.pagination-box:hover {
+  background-color: #f0f0f0; /* Change to the desired hover color */
+  cursor: pointer;
+}
+
+.pagination-box.active {
+  
+  font-weight: bold;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.container {
+  /* border: 2px solid #000;  */
+  margin-right: auto;
+  margin-left: auto;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  /* background-color: #fff;  */
+  /* max-width: 1200px;  */
+}
+
+
+
+.create-btn{
+  
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 12px 24px;
+  border: 0;
+  color: #fff;
+  background: #000a47;
+  line-height: 1.15;
+  font-size: 16px;
+  
+
+}
+.create-btn:hover {
+  transition: all .1s ease;
+  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+}
+
+
+.modalDelete{
+  margin-top: 12rem;
+}
+
+
+
+

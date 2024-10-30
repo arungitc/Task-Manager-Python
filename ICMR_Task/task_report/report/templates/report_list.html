@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center  mt-4">
+        Welcome to ICMR Daily Task Manager
+    </h1>
+
+<a class="btn btn-primary" href="{% url 'report_create' %}">
+  <i class="fa-solid fa-plus"></i> 
+</a> 
+
+<div class="container row gap-3 mt-5">
+    {% for report in reports %}
+    <div class="card" style="width: 18rem;">
+        
+        <div class="card-body">
+          <h5 class="card-title text-capitalize">User: {{report.user.username}}</h5>
+          <h6 class="text-uppercase">Name of Institutes: {{report.Name_of_Institutes}}</h6>
+          <h6 class="">Head under project/Website: {{report.head}}</h6>
+          <h6>Subject: {{report.subject}}</h6>
+          <h6>Email ID: {{report.email}}</h6>
+           <h6>Date: {{report.date}}</h6>
+          <p class="card-text">
+            <a href="{{report.pdf_link}}" target="_blank" class="text-decoration-none text-danger">
+              <i class="fa-solid fa-file-pdf"></i>
+              Click:
+            </a>
+             
+          </p>
+          {% if report.user == user %}
+          <a href="{% url 'report_edit' report.id %}" class="btn btn-primary">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+          <a href="{% url 'report_delete' report.id %}" class="btn btn-danger">
+            <i class="fa-solid fa-trash-can"></i>
+          </a>
+          
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %} 
